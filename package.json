@@ -2,12 +2,12 @@
   "name": "ombrevallauncher",
   "version": "1.12.2",
   "productName": "Ombreval Launcher",
-  "description": "Modded Minecraft Launcher",
-  "author": "Julien Vermet (https://github.com/jvermet/)",
+  "description": "Launcher Minecraft Moddé",
+  "author": "Julien Vermet (https://github.com/A0d3n/)",
   "license": "Ombreval",
   "homepage": "https://ombreval.fr",
   "bugs": {
-    "url": "https://github.com/dscalzi/HeliosLauncher/issues"
+    "url": "https://github.com/A0d3n/OmbrevalLauncher/issues"
   },
   "private": true,
   "main": "index.js",
@@ -47,6 +47,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dscalzi/HeliosLauncher.git"
+    "url": "git+https://github.com/A0d3n/OmbrevalLauncher.git"
   }
 }

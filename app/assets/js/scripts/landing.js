@@ -85,14 +85,14 @@ function setLaunchEnabled(val){
 
 // Bind launch button
 document.getElementById('launch_button').addEventListener('click', function(e){
-    loggerLanding.log('Launching game..')
+    loggerLanding.log('Lancement du jeu...')
     const mcVersion = DistroManager.getDistribution().getServer(ConfigManager.getSelectedServer()).getMinecraftVersion()
     const jExe = ConfigManager.getJavaExecutable()
     if(jExe == null){
         asyncSystemScan(mcVersion)
     } else {
 
-        setLaunchDetails(Lang.queryJS('landing.launch.pleaseWait'))
+        setLaunchDetails(Lang.queryJS('Veuillez patienter'))
         toggleLaunchArea(true)
         setLaunchPercentage(0, 100)
 
@@ -124,7 +124,7 @@ document.getElementById('avatarOverlay').onclick = (e) => {
 
 // Bind selected account
 function updateSelectedAccount(authUser){
-    let username = 'No Account Selected'
+    let username = 'Pas de compte sélectionné'
     if(authUser != null){
         if(authUser.displayName != null){
             username = authUser.displayName
@@ -151,7 +151,7 @@ function updateSelectedServer(serv){
     setLaunchEnabled(serv != null)
 }
 // Real text is set in uibinder.js on distributionIndexDone.
-server_selection_button.innerHTML = '\u2022 Loading..'
+server_selection_button.innerHTML = '\u2022 Chargement..'
 server_selection_button.onclick = (e) => {
     e.target.blur()
     toggleServerSelection(true)
@@ -210,18 +210,14 @@ const refreshMojangStatuses = async function(){
         loggerLanding.warn('Unable to refresh Mojang service status.')
         loggerLanding.debug(err)
     }
-    
-    document.getElementById('mojangStatusEssentialContainer').innerHTML = tooltipEssentialHTML
-    document.getElementById('mojangStatusNonEssentialContainer').innerHTML = tooltipNonEssentialHTML
-    document.getElementById('mojang_status_icon').style.color = Mojang.statusToHex(status)
 }
 
 const refreshServerStatus = async function(fade = false){
     loggerLanding.log('Refreshing Server Status')
     const serv = DistroManager.getDistribution().getServer(ConfigManager.getSelectedServer())
 
-    let pLabel = 'SERVER'
-    let pVal = 'OFFLINE'
+    let pLabel = 'SERVEUR'
+    let pVal = 'HORS_LIGNE'
 
     try {
         const serverURL = new URL('my://' + serv.getAddress())
@@ -323,7 +319,7 @@ function asyncSystemScan(mcVersion, launchAfter = true){
                 // Show this information to the user.
                 setOverlayContent(
                     'No Compatible<br>Java Installation Found',
-                    'In order to join WesterosCraft, you need a 64-bit installation of Java 8. Would you like us to install a copy? By installing, you accept <a href="http://www.oracle.com/technetwork/java/javase/terms/license/index.html">Oracle\'s license agreement</a>.',
+                    'In order to join Ombreval, you need a 64-bit installation of Java 8. Would you like us to install a copy? By installing, you accept <a href="http://www.oracle.com/technetwork/java/javase/terms/license/index.html">Oracle\'s license agreement</a>.',
                     'Install Java',
                     'Install Manually'
                 )
@@ -375,7 +371,7 @@ function asyncSystemScan(mcVersion, launchAfter = true){
             if(m.result === true){
 
                 // Oracle JRE enqueued successfully, begin download.
-                setLaunchDetails('Downloading Java..')
+                setLaunchDetails('Téléchargement de Java..')
                 sysAEx.send({task: 'execute', function: 'processDlQueues', argsArr: [[{id:'java', limit:1}]]})
 
             } else {
@@ -465,11 +461,9 @@ let proc
 // Is DiscordRPC enabled
 let hasRPC = false
 // Joined server regex
-// Change this if your server uses something different.
-const SERVER_JOINED_REGEX = /\[.+\]: \[CHAT\] [a-zA-Z0-9_]{1,16} joined the game/
-const GAME_JOINED_REGEX = /\[.+\]: Sound engine started/
-const GAME_LAUNCH_REGEX = /^\[.+\]: (?:MinecraftForge .+ Initialized|ModLauncher .+ starting: .+)$/
-const MIN_LINGER = 5000
+const SERVER_JOINED_REGEX = /\[.+\]: \[CHAT\] [a-zA-Z0-9_]{1,16} vient d'arriver !/
+const GAME_JOINED_REGEX = /\[.+\]: Skipping bad option: lastServer:/
+const GAME_LAUNCH_REGEX = /^\[.+\]: MinecraftForge .+ Initialized$/
 
 let aEx
 let serv
@@ -538,27 +532,27 @@ function dlAsync(login = true){
                 case 'distribution':
                     setLaunchPercentage(20, 100)
                     loggerLaunchSuite.log('Validated distibution index.')
-                    setLaunchDetails('Loading version information..')
+                    setLaunchDetails('Chargement des informations de version..')
                     break
                 case 'version':
                     setLaunchPercentage(40, 100)
                     loggerLaunchSuite.log('Version data loaded.')
-                    setLaunchDetails('Validating asset integrity..')
+                    setLaunchDetails('Validation de l"intégrité des actifs..')
                     break
                 case 'assets':
                     setLaunchPercentage(60, 100)
                     loggerLaunchSuite.log('Asset Validation Complete')
-                    setLaunchDetails('Validating library integrity..')
+                    setLaunchDetails('Valider l"intégrité de la bibliothèque..')
                     break
                 case 'libraries':
                     setLaunchPercentage(80, 100)
                     loggerLaunchSuite.log('Library validation complete.')
-                    setLaunchDetails('Validating miscellaneous file integrity..')
+                    setLaunchDetails('Validation de l"intégrité des fichiers divers..')
                     break
                 case 'files':
                     setLaunchPercentage(100, 100)
                     loggerLaunchSuite.log('File validation complete.')
-                    setLaunchDetails('Downloading files..')
+                    setLaunchDetails('Vérification des mods en cours...')
                     break
             }
         } else if(m.context === 'progress'){
@@ -600,23 +594,23 @@ function dlAsync(login = true){
                         progressListener = null
                     }
 
-                    setLaunchDetails('Preparing to launch..')
+                    setLaunchDetails('Préparation du lancement..')
                     break
             }
         } else if(m.context === 'error'){
             switch(m.data){
                 case 'download':
-                    loggerLaunchSuite.error('Error while downloading:', m.error)
+                    loggerLaunchSuite.error('Erreur lors du téléchargement:', m.error)
                     
                     if(m.error.code === 'ENOENT'){
                         showLaunchFailure(
-                            'Download Error',
-                            'Could not connect to the file server. Ensure that you are connected to the internet and try again.'
+                            'Erreur de téléchargement',
+                            'Impossible de se connecter au serveur de fichiers. Assurez-vous que vous êtes connecté à Internet et réessayez.'
                         )
                     } else {
                         showLaunchFailure(
-                            'Download Error',
-                            'Check the console (CTRL + Shift + i) for more details. Please try again.'
+                            'Erreur de téléchargement',
+                            'Veuillez contacter le staff sur Discord.'
                         )
                     }
 
@@ -632,10 +626,10 @@ function dlAsync(login = true){
 
             // If these properties are not defined it's likely an error.
             if(m.result.forgeData == null || m.result.versionData == null){
-                loggerLaunchSuite.error('Error during validation:', m.result)
+                loggerLaunchSuite.error('Erreur lors de la validation:', m.result)
 
-                loggerLaunchSuite.error('Error during launch', m.result.error)
-                showLaunchFailure('Error During Launch', 'Please check the console (CTRL + Shift + i) for more details.')
+                loggerLaunchSuite.error('Erreur pendant le lancement', m.result.error)
+                showLaunchFailure('Erreur pendant le lancement', 'Veuillez contacter le staff sur Discord.')
 
                 allGood = false
             }
@@ -647,18 +641,7 @@ function dlAsync(login = true){
                 const authUser = ConfigManager.getSelectedAccount()
                 loggerLaunchSuite.log(`Sending selected account (${authUser.displayName}) to ProcessBuilder.`)
                 let pb = new ProcessBuilder(serv, versionData, forgeData, authUser, remote.app.getVersion())
-                setLaunchDetails('Launching game..')
-
-                const onLoadComplete = () => {
-                    toggleLaunchArea(false)
-                    if(hasRPC){
-                        DiscordWrapper.updateDetails('Loading game..')
-                    }
-                    proc.stdout.on('data', gameStateChange)
-                    proc.stdout.removeListener('data', tempListener)
-                    proc.stderr.removeListener('data', gameErrorListener)
-                }
-                const start = Date.now()
+                setLaunchDetails('Lancement du jeu..')
 
                 // Attach a temporary listener to the client output.
                 // Will wait for a certain bit of text meaning that
@@ -666,12 +649,13 @@ function dlAsync(login = true){
                 // the progress bar stuff.
                 const tempListener = function(data){
                     if(GAME_LAUNCH_REGEX.test(data.trim())){
-                        const diff = Date.now()-start
-                        if(diff < MIN_LINGER) {
-                            setTimeout(onLoadComplete, MIN_LINGER-diff)
-                        } else {
-                            onLoadComplete()
+                        toggleLaunchArea(false)
+                        if(hasRPC){
+                            DiscordWrapper.updateDetails('Chargement en cours..')
                         }
+                        proc.stdout.on('data', gameStateChange)
+                        proc.stdout.removeListener('data', tempListener)
+                        proc.stderr.removeListener('data', gameErrorListener)
                     }
                 }
 
@@ -679,9 +663,9 @@ function dlAsync(login = true){
                 const gameStateChange = function(data){
                     data = data.trim()
                     if(SERVER_JOINED_REGEX.test(data)){
-                        DiscordWrapper.updateDetails('Exploring the Realm!')
+                        DiscordWrapper.updateDetails('Explore Ombreval !')
                     } else if(GAME_JOINED_REGEX.test(data)){
-                        DiscordWrapper.updateDetails('Sailing to Westeros!')
+                        DiscordWrapper.updateDetails('En route pour Ombreval !')
                     }
                 }
 
@@ -701,7 +685,7 @@ function dlAsync(login = true){
                     proc.stdout.on('data', tempListener)
                     proc.stderr.on('data', gameErrorListener)
 
-                    setLaunchDetails('Done. Enjoy the server!')
+                    setLaunchDetails('Terminé. Profitez bien du serveur!')
 
                     // Init Discord Hook
                     const distro = DistroManager.getDistribution()
@@ -718,8 +702,8 @@ function dlAsync(login = true){
 
                 } catch(err) {
 
-                    loggerLaunchSuite.error('Error during launch', err)
-                    showLaunchFailure('Error During Launch', 'Please check the console (CTRL + Shift + i) for more details.')
+                    loggerLaunchSuite.error('Erreur pendant le lancement', err)
+                    showLaunchFailure('Erreur pendant le lancement')
 
                 }
             }
@@ -1064,7 +1048,7 @@ document.addEventListener('keydown', (e) => {
 function displayArticle(articleObject, index){
     newsArticleTitle.innerHTML = articleObject.title
     newsArticleTitle.href = articleObject.link
-    newsArticleAuthor.innerHTML = 'by ' + articleObject.author
+    newsArticleAuthor.innerHTML = 'par ' + articleObject.author
     newsArticleDate.innerHTML = articleObject.date
     newsArticleComments.innerHTML = articleObject.comments
     newsArticleComments.href = articleObject.commentsLink
@@ -1088,54 +1072,56 @@ function loadNews(){
         const distroData = DistroManager.getDistribution()
         const newsFeed = distroData.getRSS()
         const newsHost = new URL(newsFeed).origin + '/'
-        $.ajax({
-            url: newsFeed,
-            success: (data) => {
-                const items = $(data).find('item')
-                const articles = []
+        $.ajax(
+            {
+                url: newsFeed,
+                success: (data) => {
+                    const items = $(data).find('item')
+                    const articles = []
 
-                for(let i=0; i<items.length; i++){
-                // JQuery Element
-                    const el = $(items[i])
+                    for(let i=0; i<items.length; i++){
+                    // JQuery Element
+                        const el = $(items[i])
 
-                    // Resolve date.
-                    const date = new Date(el.find('pubDate').text()).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'})
+                        // Resolve date.
+                        const date = new Date(el.find('pubDate').text()).toLocaleDateString('fr', {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'})
 
-                    // Resolve comments.
-                    let comments = el.find('slash\\:comments').text() || '0'
-                    comments = comments + ' Comment' + (comments === '1' ? '' : 's')
+                        // Resolve comments.
+                        let comments = el.find('slash\\:comments').text() || '0'
+                        comments = comments + ' Comment' + (comments === '1' ? '' : 's')
 
-                    // Fix relative links in content.
-                    let content = el.find('content\\:encoded').text()
-                    let regex = /src="(?!http:\/\/|https:\/\/)(.+?)"/g
-                    let matches
-                    while((matches = regex.exec(content))){
-                        content = content.replace(`"${matches[1]}"`, `"${newsHost + matches[1]}"`)
-                    }
-
-                    let link   = el.find('link').text()
-                    let title  = el.find('title').text()
-                    let author = el.find('dc\\:creator').text()
-
-                    // Generate article.
-                    articles.push(
-                        {
-                            link,
-                            title,
-                            date,
-                            author,
-                            content,
-                            comments,
-                            commentsLink: link + '#comments'
+                        // Fix relative links in content.
+                        let content = el.find('content\\:encoded').text()
+                        let regex = /src="(?!http:\/\/|https:\/\/)(.+?)"/g
+                        let matches
+                        while((matches = regex.exec(content))){
+                            content = content.replace(`"${matches[1]}"`, `"${newsHost + matches[1]}"`)
                         }
-                    )
-                }
-                resolve({
-                    articles
-                })
-            },
-            timeout: 2500
-        }).catch(err => {
+
+                        let link   = el.find('link').text()
+                        let title  = el.find('title').text()
+                        let author = el.find('dc\\:creator').text()
+
+                        // Generate article.
+                        articles.push(
+                            {
+                                link,
+                                title,
+                                date,
+                                author,
+                                content,
+                                comments,
+                                commentsLink: link + '#comments'
+                            }
+                        )
+                    }
+                    resolve({
+                        articles
+                    })
+                },
+                timeout: 2500
+            }
+        ).catch(err => {
             resolve({
                 articles: null
             })

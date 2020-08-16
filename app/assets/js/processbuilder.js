@@ -184,19 +184,12 @@ class ProcessBuilder {
         }
     }
 
-    _lteMinorVersion(version) {
-        return Number(this.forgeData.id.split('-')[0].split('.')[1]) <= Number(version)
-    }
-
     /**
      * Test to see if this version of forge requires the absolute: prefix
      * on the modListFile repository field.
      */
     _requiresAbsolute(){
         try {
-            if(this._lteMinorVersion(9)) {
-                return false
-            }
             const ver = this.forgeData.id.split('-')[2]
             const pts = ver.split('.')
             const min = [14, 23, 3, 2655]
@@ -272,18 +265,6 @@ class ProcessBuilder {
         
     }
 
-    _processAutoConnectArg(args){
-        if(ConfigManager.getAutoConnect() && this.server.isAutoConnect()){
-            const serverURL = new URL('my://' + this.server.getAddress())
-            args.push('--server')
-            args.push(serverURL.hostname)
-            if(serverURL.port){
-                args.push('--port')
-                args.push(serverURL.port)
-            }
-        }
-    }
-
     /**
      * Construct the argument array that will be passed to the JVM process.
      * 
@@ -317,7 +298,7 @@ class ProcessBuilder {
 
         // Java Arguments
         if(process.platform === 'darwin'){
-            args.push('-Xdock:name=HeliosLauncher')
+            args.push('-Xdock:name=OmbrevalLauncher')
             args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
         }
         args.push('-Xmx' + ConfigManager.getMaxRAM())
@@ -355,7 +336,7 @@ class ProcessBuilder {
 
         // Java Arguments
         if(process.platform === 'darwin'){
-            args.push('-Xdock:name=HeliosLauncher')
+            args.push('-Xdock:name=OmbrevalLauncher')
             args.push('-Xdock:icon=' + path.join(__dirname, '..', 'images', 'minecraft.icns'))
         }
         args.push('-Xmx' + ConfigManager.getMaxRAM())
@@ -389,7 +370,7 @@ class ProcessBuilder {
                         // This should be fine for a while.
                         if(rule.features.has_custom_resolution != null && rule.features.has_custom_resolution === true){
                             if(ConfigManager.getFullscreen()){
-                                args[i].value = [
+                                rule.values = [
                                     '--fullscreen',
                                     'true'
                                 ]
@@ -457,7 +438,7 @@ class ProcessBuilder {
                             val = args[i].replace(argDiscovery, tempNativePath)
                             break
                         case 'launcher_name':
-                            val = args[i].replace(argDiscovery, 'Helios-Launcher')
+                            val = args[i].replace(argDiscovery, 'Ombreval-Launcher')
                             break
                         case 'launcher_version':
                             val = args[i].replace(argDiscovery, this.launcherVersion)
@@ -472,24 +453,6 @@ class ProcessBuilder {
                 }
             }
         }
-
-        // Autoconnect
-        let isAutoconnectBroken
-        try {
-            isAutoconnectBroken = Util.isAutoconnectBroken(this.forgeData.id.split('-')[2])
-        } catch(err) {
-            logger.error(err)
-            logger.error('Forge version format changed.. assuming autoconnect works.')
-            logger.debug('Forge version:', this.forgeData.id)
-        }
-
-        if(isAutoconnectBroken) {
-            logger.error('Server autoconnect disabled on Forge 1.15.2 for builds earlier than 31.2.15 due to OpenGL Stack Overflow issue.')
-            logger.error('Please upgrade your Forge version to at least 31.2.15!')
-        } else {
-            this._processAutoConnectArg(args)
-        }
-        
 
         // Forge Specific Arguments
         args = args.concat(this.forgeData.arguments.game)
@@ -542,9 +505,6 @@ class ProcessBuilder {
                     case 'user_type':
                         val = 'mojang'
                         break
-                    case 'user_properties': // 1.8.9 and below.
-                        val = '{}'
-                        break
                     case 'version_type':
                         val = this.versionData.type
                         break
@@ -556,7 +516,15 @@ class ProcessBuilder {
         }
 
         // Autoconnect to the selected server.
-        this._processAutoConnectArg(mcArgs)
+        if(ConfigManager.getAutoConnect() && this.server.isAutoConnect()){
+            const serverURL = new URL('my://' + this.server.getAddress())
+            mcArgs.push('--server')
+            mcArgs.push(serverURL.hostname)
+            if(serverURL.port){
+                mcArgs.push('--port')
+                mcArgs.push(serverURL.port)
+            }
+        }
 
         // Prepare game resolution
         if(ConfigManager.getFullscreen()){
@@ -571,12 +539,7 @@ class ProcessBuilder {
         
         // Mod List File Argument
         mcArgs.push('--modListFile')
-        if(this._lteMinorVersion(9)) {
-            mcArgs.push(path.basename(this.fmlDir))
-        } else {
-            mcArgs.push('absolute:' + this.fmlDir)
-        }
-        
+        mcArgs.push('absolute:' + this.fmlDir)
 
         // LiteLoader
         if(this.usingLiteLoader){
@@ -589,24 +552,6 @@ class ProcessBuilder {
         }
 
         return mcArgs
-    }
-
-    /**
-     * Ensure that the classpath entries all point to jar files.
-     * 
-     * @param {Array.<String>} list Array of classpath entries.
-     */
-    _processClassPathList(list) {
-
-        const ext = '.jar'
-        const extLen = ext.length
-        for(let i=0; i<list.length; i++) {
-            const extIndex = list[i].indexOf(ext)
-            if(extIndex > -1 && extIndex  !== list[i].length - extLen) {
-                list[i] = list[i].substring(0, extIndex + extLen)
-            }
-        }
-
     }
 
     /**
@@ -631,17 +576,11 @@ class ProcessBuilder {
 
         // Resolve the Mojang declared libraries.
         const mojangLibs = this._resolveMojangLibraries(tempNativePath)
+        cpArgs = cpArgs.concat(mojangLibs)
 
         // Resolve the server declared libraries.
         const servLibs = this._resolveServerLibraries(mods)
-
-        // Merge libraries, server libs with the same
-        // maven identifier will override the mojang ones.
-        // Ex. 1.7.10 forge overrides mojang's guava with newer version.
-        const finalLibs = {...mojangLibs, ...servLibs}
-        cpArgs = cpArgs.concat(Object.values(finalLibs))
-
-        this._processClassPathList(cpArgs)
+        cpArgs = cpArgs.concat(servLibs)
 
         return cpArgs
     }
@@ -653,10 +592,10 @@ class ProcessBuilder {
      * TODO - clean up function
      * 
      * @param {string} tempNativePath The path to store the native libraries.
-     * @returns {{[id: string]: string}} An object containing the paths of each library mojang declares.
+     * @returns {Array.<string>} An array containing the paths of each library mojang declares.
      */
     _resolveMojangLibraries(tempNativePath){
-        const libs = {}
+        const libs = []
 
         const libArr = this.versionData.libraries
         fs.ensureDirSync(tempNativePath)
@@ -667,8 +606,7 @@ class ProcessBuilder {
                     const dlInfo = lib.downloads
                     const artifact = dlInfo.artifact
                     const to = path.join(this.libPath, artifact.path)
-                    const versionIndependentId = lib.name.substring(0, lib.name.lastIndexOf(':'))
-                    libs[versionIndependentId] = to
+                    libs.push(to)
                 } else {
                     // Extract the native library.
                     const exclusionArr = lib.extract != null ? lib.extract.exclude : ['META-INF/']
@@ -716,21 +654,21 @@ class ProcessBuilder {
      * declare libraries.
      * 
      * @param {Array.<Object>} mods An array of enabled mods which will be launched with this process.
-     * @returns {{[id: string]: string}} An object containing the paths of each library this server requires.
+     * @returns {Array.<string>} An array containing the paths of each library this server requires.
      */
     _resolveServerLibraries(mods){
         const mdls = this.server.getModules()
-        let libs = {}
+        let libs = []
 
         // Locate Forge/Libraries
         for(let mdl of mdls){
             const type = mdl.getType()
             if(type === DistroManager.Types.ForgeHosted || type === DistroManager.Types.Library){
-                libs[mdl.getVersionlessID()] = mdl.getArtifact().getPath()
+                libs.push(mdl.getArtifact().getPath())
                 if(mdl.hasSubModules()){
                     const res = this._resolveModuleLibraries(mdl)
                     if(res.length > 0){
-                        libs = {...libs, ...res}
+                        libs = libs.concat(res)
                     }
                 }
             }
@@ -741,7 +679,7 @@ class ProcessBuilder {
             if(mods.sub_modules != null){
                 const res = this._resolveModuleLibraries(mods[i])
                 if(res.length > 0){
-                    libs = {...libs, ...res}
+                    libs = libs.concat(res)
                 }
             }
         }
@@ -775,7 +713,6 @@ class ProcessBuilder {
         }
         return libs
     }
-
 }
 
 module.exports = ProcessBuilder

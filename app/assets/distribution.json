@@ -1,0 +1,423 @@
+{
+    "version": "1.0.7",
+    "discord": {
+        "clientId": "706812880179167312"
+    },
+    "java": {
+        "oracle": "http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html"
+    },
+    "rss": "https://ombreval.fr/rss/flux_rss_news_ombreval.rss",
+    "servers": [
+{
+            "id": "Ombreval-1.12.2",
+            "name": "Serveur Ombreval 1.12.2",
+            "description": "Nouveau serveur Ombreval 1.12.2 moddé.",
+            "icon": "https://ombreval.fr/OmbrevalLauncher/favicon.png",
+            "version": "1.1",
+            "address": "play.ombreval.fr",
+            "minecraftVersion": "1.12.2",
+            "discord": {
+                "shortId": "1.12.2 Serveur",
+                "largeImageText": "Ombreval, serveur RP Médiéval",
+                "largeImageKey": "logo_ombreval"
+            },
+            "mainServer": true,
+            "autoconnect": true,
+            "modules": [
+                {
+                    "id": "net.minecraftforge:forge:1.12.2-14.23.5.2838",
+                    "name": "Minecraft Forge",
+                    "type": "ForgeHosted",
+                    "artifact": {
+                        "size": 5035170,
+                        "MD5": "77428ff4f06e76c827207a01459e1a4c",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/forge-1.12.2-14.23.5.2838-universal.jar"
+                    },
+                    "subModules": [
+                        {
+                            "id": "net.minecraft:launchwrapper:1.12",
+                            "name": "Mojang (LaunchWrapper)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 32999,
+                                "MD5": "934b2d91c7c5be4a49577c9e6b40e8da",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/launchwrapper-1.12.jar"
+                            }
+                        },
+                        {
+                            "id": "org.ow2.asm:asm-all:5.2",
+                            "name": "Mojang (ASM)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 247787,
+                                "MD5": "f5ad16c7f0338b541978b0430d51dc83",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/asm-all-5.2.jar"
+                            }
+                        },
+                        {
+                            "id": "org.jline:jline:3.5.1",
+                            "name": "Mojang (jline)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 614590,
+                                "MD5": "81c1938c8c3d69b62470d25fc9accbca",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/jline-3.5.1.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang:scala-library:2.11.1",
+                            "name": "Minecraft Forge (scala-library)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 5612286,
+                                "MD5": "beb3645e01411e769500423c747f23c8",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-library-2.11.1.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang:scala-compiler:2.11.1",
+                            "name": "Minecraft Forge (scala-compiler)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 13576400,
+                                "MD5": "ae3eb3e979521f3b2270b0d549455ffa",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-compiler-2.11.1.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang:scala-actors-migration_2.11:1.1.0",
+                            "name": "Minecraft Forge (scala-actors-migration)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 58767,
+                                "MD5": "cd011bd90e996dc565de170f3bac2b3b",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-actors-migration_2.11-1.1.0.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang.plugins:scala-continuations-library_2.11:1.0.2",
+                            "name": "Minecraft Forge (scala-continuations-library)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 26551,
+                                "MD5": "7261dfe7ee9f87eba9c7564e24ddc913",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-continuations-library_2.11-1.0.2.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang.plugins:scala-continuations-plugin_2.11.1:1.0.2",
+                            "name": "Minecraft Forge (scala-continuations-plugin)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 209882,
+                                "MD5": "d3fdf0b45014626dca1c87c93e364a85",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-continuations-plugin_2.11.1-1.0.2.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang:scala-parser-combinators_2.11:1.0.1",
+                            "name": "Minecraft Forge (scala-parser-combinators)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 430247,
+                                "MD5": "ad26fd1fa54e1c38d58f39b8efb1e30a",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-parser-combinators_2.11-1.0.1.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang:scala-reflect:2.11.1",
+                            "name": "Minecraft Forge (scala-reflect)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 4415437,
+                                "MD5": "947de3d6ae11305a3b82bac304aa0f34",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-reflect-2.11.1.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang:scala-swing_2.11:1.0.1",
+                            "name": "Minecraft Forge (scala-swing)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 736831,
+                                "MD5": "3229103843aa1d906cc9fed8c29c8df6",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-swing_2.11-1.0.1.jar"
+                            }
+                        },
+                        {
+                            "id": "org.scala-lang:scala-xml_2.11:1.0.2",
+                            "name": "Minecraft Forge (scala-xml)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 660552,
+                                "MD5": "5ec95a03018b35859d65d744000238e5",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/scala-xml_2.11-1.0.2.jar"
+                            }
+                        },
+                        {
+                            "id": "com.typesafe.akka:akka-actor_2.11:2.3.3",
+                            "name": "Minecraft Forge (akka-actor)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 2553197,
+                                "MD5": "07b8986645ddc30dc83e81a9c3c5a732",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/akka-actor_2.11-2.3.3.jar"
+                            }
+                        },
+                        {
+                            "id": "com.typesafe:config:1.2.1",
+                            "name": "Minecraft Forge (typesafe-config)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 221173,
+                                "MD5": "5ed5dd639f3f3b6391f92686026a4ccf",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/config-1.2.1.jar"
+                            }
+                        },
+                        {
+                            "id": "lzma:lzma:0.0.1",
+                            "name": "Mojang (LZMA)",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 5762,
+                                "MD5": "a3e3c3186e41c4a1a3027ba2bb23cdc6",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/lzma-0.0.1.jar"
+                            }
+                        },
+                        {
+                            "id": "net.sf.trove4j:trove4j:3.0.3",
+                            "name": "Trove4J",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 2523218,
+                                "MD5": "8fc4d4e0129244f9fd39650c5f30feb2",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/trove4j-3.0.3.jar"
+                            }
+                        },
+                        {
+                            "id": "java3d:vecmath:1.5.2",
+                            "name": "Vecmath",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 318956,
+                                "MD5": "e5d2b7f46c4800a32f62ce75676a5710",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/vecmath-1.5.2.jar"
+                            }
+                        },
+                        {
+                            "id": "net.sf.jopt-simple:jopt-simple:5.0.3",
+                            "name": "Jopt-simple",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 78175,
+                                "MD5": "0a5ec84e23df9d7cfb4063bc55f2744c",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/jopt-simple-5.0.3.jar"
+                            }
+                        },
+                        {
+                            "id": "org.apache.maven:maven-artifact:3.5.3",
+                            "name": "maven-artifact",
+                            "type": "Library",
+                            "artifact": {
+                                "size": 54961,
+                                "MD5": "7741ebf29690ee7d9dde9cf4376347fc",
+                                "url": "https://ombreval.fr/OmbrevalLauncher/files/1.12.2/maven-artifact-3.5.3.jar"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "com:SpartanShields:1.12.1.3a",
+                    "name": "SpartanShields",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 143255,
+                        "MD5": "39755db4aecf82b05f70d0180d8836c0",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/SpartanShields.jar"
+                    }
+                },
+                {
+                    "id": "com:SpartanWeaponry:1.12.2-beta-1.1.1",
+                    "name": "SpartanWeaponry",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 505063,
+                        "MD5": "ec5ce1aebe483c06c6f4db38a7c65364",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/SpartanWeaponry.jar"
+                    }
+                },
+                {
+                    "id": "com:simplecore:1.12.2-1.7.3.4",
+                    "name": "simplecore",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 133644,
+                        "MD5": "e901b05a219932eb9298d8ab93d27a2c",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/simplecore.jar"
+                    }
+                },
+                {
+                    "id": "com:simpleores:1.12.2-1.11.2.2",
+                    "name": "simpleores",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 157767,
+                        "MD5": "a1285297960dfe9dc38597e8b933924e",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/simpleores.jar"
+                    }
+                },
+                {
+                    "id": "com:biomesoplenty:1.12.2-7.0.1.2444-universal",
+                    "name": "BiomesOPlenty",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 4705147,
+                        "MD5": "88818b36ba4e68cec962cc6fac1b514f",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/BiomesOPlenty.jar"
+                    }
+                },
+                {
+                    "id": "com:antiqueatlas:1.12.2-4.5.1",
+                    "name": "antiqueatlas",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 1270824,
+                        "MD5": "fd80eeadd8faa80bb7df46444cff83e9",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/antiqueatlas.jar"
+                    }
+                },
+                {
+                    "id": "com:bibliocraft:[v2.4.3][MC1.12.0]",
+                    "name": "BiblioCraft",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 5148425,
+                        "MD5": "e6db2596da355e0f0763f96eb390f0b0",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/BiblioCraft.jar"
+                    }
+                },
+                {
+                    "id": "com:betteranimalsplus:1.12.2-9.0.1",
+                    "name": "betteranimalsplus",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 8211365,
+                        "MD5": "5772b6cf7073aa37a2375dd456342990",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/betteranimalsplus.jar"
+                    }
+                },
+                {
+                    "id": "com:animania:1.12.2-1.7.3",
+                    "name": "animania",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 8923896,
+                        "MD5": "4f17eaba0d54611c5206e7dc753f128d",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/animania.jar"
+                    }
+                },
+                {
+                    "id": "com:craftstudio:1.0.0.93-mc1.12-alpha",
+                    "name": "CraftStudio",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 88557,
+                        "MD5": "7d936cede620c3cfb3d626d0d350cddf",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/CraftStudio.jar"
+                    }
+                },
+                {
+                    "id": "com:silentlib:1.12.2-3.0.14+168",
+                    "name": "SilentLib",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 369314,
+                        "MD5": "1dd82faab2d3a71f7a1aab092b5f64c9",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/SilentLib.jar"
+                    }
+                },
+                {
+                    "id": "com:ExtendedDays:1.12.2-0.2.9-28",
+                    "name": "ExtendedDays",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 48552,
+                        "MD5": "93eddbde02b5bf469fac10b0c2e4128b",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/ExtendedDays.jar"
+                    }
+                },
+                {
+                    "id": "com:ToughAsNails:1.12.2-3.1.0.141-universal",
+                    "name": "ToughAsNails",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 357504,
+                        "MD5": "acd20f2ff92c8028af176ac8a993322e",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/ToughAsNails.jar"
+                    }
+                },
+                {
+                    "id": "com:CustomNPCs:1.12.2",
+                    "name": "CustomNPCs",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 10440159,
+                        "MD5": "ddd7ed385245bbe6f9b1151b7dc29b1d",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/CustomNPCs.jar"
+                    }
+                },
+                {
+                    "id": "com:OptiFine:1.12.2_HD_U_E3",
+                    "name": "OptiFine",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 2444057,
+                        "MD5": "0c41d1a70b33f577f4665b4062c75cd4",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/OptiFine.jar"
+                    }
+                },
+                {
+                    "id": "com:HideNames:1.12.2-1.4.1",
+                    "name": "HideNames",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 20406,
+                        "MD5": "81bcd30b2272feaf8e772642b2212f9d",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/HideNames.jar"
+                    }
+                },
+                {
+                    "id": "com:spongeforge:1.12.2-2838-7.2.3",
+                    "name": "spongeforge",
+                    "type": "ForgeMod",
+                    "artifact": {
+                        "size": 22318754,
+                        "MD5": "37362da6f00844bb6f30407761884ef6",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/mods/spongeforge-1.12.2-2838-7.2.3.jar"
+                    }
+                },
+                {
+                    "id": "options.txt",
+                    "name": "Default Client Options",
+                    "type": "File",
+                    "artifact": {
+                        "size": 1973,
+                        "path": "options.txt",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/files/options-1.12.2.txt"
+                    }
+                },
+                {
+                    "id": "servers.dat",
+                    "name": "Saved Client Servers",
+                    "type": "File",
+                    "artifact": {
+                        "size": 71,
+                        "MD5": "64dc1db90935997f07dfac422206f1de",
+                        "path": "servers.dat",
+                        "url": "https://ombreval.fr/OmbrevalLauncher/1.12.2/servers.dat"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+    "html": {
+        "avatarOverlay": "Éditer"
+    },
+    "js": {
+        "login": {
+            "error": {
+                "invalidValue": "* Valeur invalide",
+                "requiredValue": "* Valeur requise",
+                "userMigrated": {
+                    "title": "Erreur pendant le chargement:<br>Saisie Invalide",
+                    "desc": "Vous avez tenté de vous connecter avec un compte migré. Essayez à nouveau en utilisant l'adresse e-mail du compte comme nom d'utilisateur."
+                },
+                "invalidCredentials": {
+                    "title": "Erreur pendant le chargement:<br>Saisie Invalide",
+                    "desc": "L'e-mail ou le mot de passe que vous avez entré est incorrect. Veuillez réessayer."
+                },
+                "rateLimit": {
+                    "title": "Erreur pendant le chargement:<br>Trop d'essais",
+                    "desc": "Il y a eu trop de tentatives de connexion avec ce compte récemment. Veuillez réessayer plus tard."
+                },
+                "noInternet": {
+                    "title": "Erreur pendant le chargement:<br>Pas de connexion Internet",
+                    "desc": "Vous devez être connecté à Internet pour pouvoir vous connecter. Veuillez vous connecter et réessayer."
+                },
+                "authDown": {
+                    "title": "Erreur pendant le chargement:<br>Serveur d'authentification hors ligne",
+                    "desc": "Le serveur d'authentification de Mojang est actuellement hors ligne ou inaccessible. S'il vous plaît attendez un peu et essayez à nouveau. Vous pouvez vérifier l’état du serveur sur <a href=\"https://help.mojang.com/\">le portail d'aide de Mojang</a>."
+                },
+                "notPaid": {
+                    "title": "Erreur pendant le chargement:<br>Jeu non acheté",
+                    "desc": "Le compte avec lequel vous essayez de vous connecter n'a pas acheté d'exemplaire de Minecraft.<br>Vous pouvez en acheter un sur <a href=\"https://minecraft.net/\">Minecraft.net</a>"
+                },
+                "unknown": {
+                    "title": "Erreur pendant le chargement:<br>Erreur Inconnue"
+                }
+            },
+            "login": "SE CONNECTER",
+            "loggingIn": "CONNEXION EN COURS",
+            "success": "SUCCÈS",
+            "tryAgain": "Réessayer"
+        },
+        "landing": {
+            "launch": {
+                "pleaseWait": "Veuillez patienter..."
+            }
+        }
+    }
+}

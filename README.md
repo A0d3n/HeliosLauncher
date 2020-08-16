@@ -80,7 +80,7 @@ If you want to export the console output, simply right click anywhere on the con
 
 **System Requirements**
 
-* [Node.js][nodejs] v12
+* [Node.js][nodejs] v12.x.x
 
 ---
 
@@ -193,8 +193,6 @@ We reserve the right to update these conditions at any time, please check back p
 ## Resources
 
 * [Wiki][wiki]
-* [Nebula (Create Distribution.json)][nebula]
-* [v2 Rewrite Branch (WIP)][v2branch]
 
 The best way to contact the developers is on Discord.
 
@@ -212,5 +210,3 @@ The best way to contact the developers is on Discord.
 [chromedebugger]: https://marketplace.visualstudio.com/items?itemName=msjsdiag.debugger-for-chrome 'Debugger for Chrome'
 [discord]: https://discord.gg/zNWUXdt 'Discord'
 [wiki]: https://github.com/dscalzi/HeliosLauncher/wiki 'wiki'
-[nebula]: https://github.com/dscalzi/Nebula 'dscalzi/Nebula'
-[v2branch]: https://github.com/dscalzi/HeliosLauncher/tree/ts-refactor 'v2 branch'

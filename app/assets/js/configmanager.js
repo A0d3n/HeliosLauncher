@@ -6,7 +6,7 @@ const logger = require('./loggerutil')('%c[ConfigManager]', 'color: #a02d2a; fon
 
 const sysRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : process.env.HOME)
 // TODO change
-const dataPath = path.join(sysRoot, '.helioslauncher')
+const dataPath = path.join(sysRoot, '.ombreval')
 
 // Forked processes do not have access to electron, so we have this workaround.
 const launcherDir = process.env.CONFIG_DIRECT_PATH || require('electron').remote.app.getPath('userData')
@@ -83,11 +83,11 @@ const DEFAULT_CONFIG = {
             ],
         },
         game: {
-            resWidth: 1280,
-            resHeight: 720,
+            resWidth: 1366,
+            resHeight: 768,
             fullscreen: false,
             autoConnect: true,
-            launchDetached: true
+            launchDetached: true,
         },
         launcher: {
             allowPrerelease: false,
@@ -615,7 +615,7 @@ exports.validateGameHeight = function(resHeight){
  * @param {boolean} def Optional. If true, the default value will be returned.
  * @returns {boolean} Whether or not the game is set to launch in fullscreen mode.
  */
-exports.getFullscreen = function(def = false){
+exports.getFullscreen = function(def = true){
     return !def ? config.settings.game.fullscreen : DEFAULT_CONFIG.settings.game.fullscreen
 }
 

@@ -42,34 +42,15 @@ bindSettingsSelect()
 
 
 function bindFileSelectors(){
-    for(let ele of document.getElementsByClassName('settingsFileSelButton')){
-        
-        ele.onclick = async e => {
-            const isJavaExecSel = ele.id === 'settingsJavaExecSel'
-            const directoryDialog = ele.hasAttribute('dialogDirectory') && ele.getAttribute('dialogDirectory') == 'true'
-            const properties = directoryDialog ? ['openDirectory', 'createDirectory'] : ['openFile']
-
-            const options = {
-                properties
+    for(let ele of document.getElementsByClassName('settingsFileSelSel')){
+        if(ele.id === 'settingsJavaExecSel'){
+            ele.onchange = (e) => {
+                ele.previousElementSibling.value = ele.files[0].path
+                populateJavaExecDetails(ele.previousElementSibling.value)
             }
-
-            if(ele.hasAttribute('dialogTitle')) {
-                options.title = ele.getAttribute('dialogTitle')
-            }
-
-            if(isJavaExecSel && process.platform === 'win32') {
-                options.filters = [
-                    { name: 'Executables', extensions: ['exe'] },
-                    { name: 'All Files', extensions: ['*'] }
-                ]
-            }
-
-            const res = await remote.dialog.showOpenDialog(remote.getCurrentWindow(), options)
-            if(!res.canceled) {
-                ele.previousElementSibling.value = res.filePaths[0]
-                if(isJavaExecSel) {
-                    populateJavaExecDetails(ele.previousElementSibling.value)
-                }
+        } else {
+            ele.onchange = (e) => {
+                ele.previousElementSibling.value = ele.files[0].path
             }
         }
     }
@@ -291,36 +272,12 @@ function settingsNavItemListener(ele, fade = true){
 
 const settingsNavDone = document.getElementById('settingsNavDone')
 
-/**
- * Set if the settings save (done) button is disabled.
- * 
- * @param {boolean} v True to disable, false to enable.
- */
-function settingsSaveDisabled(v){
-    settingsNavDone.disabled = v
-}
-
 /* Closes the settings view and saves all data. */
 settingsNavDone.onclick = () => {
     saveSettingsValues()
-    saveModConfiguration()
     ConfigManager.save()
-    saveDropinModConfiguration()
     saveShaderpackSettings()
     switchView(getCurrentView(), VIEWS.landing)
-}
-
-/**
- * Account Management Tab
- */
-
-// Bind the add account button.
-document.getElementById('settingsAddAccount').onclick = (e) => {
-    switchView(getCurrentView(), VIEWS.login, 500, 500, () => {
-        loginViewOnCancel = VIEWS.settings
-        loginViewOnSuccess = VIEWS.settings
-        loginCancelEnabled(true)
-    })
 }
 
 /**
@@ -337,11 +294,11 @@ function bindAuthAccountSelect(){
             for(let i=0; i<selectBtns.length; i++){
                 if(selectBtns[i].hasAttribute('selected')){
                     selectBtns[i].removeAttribute('selected')
-                    selectBtns[i].innerHTML = 'Select Account'
+                    selectBtns[i].innerHTML = 'Compte Actif'
                 }
             }
             val.setAttribute('selected', '')
-            val.innerHTML = 'Selected Account &#10004;'
+            val.innerHTML = 'Compte Actif &#10004;'
             setSelectedAccount(val.closest('.settingsAuthAccount').getAttribute('uuid'))
         }
     })
@@ -359,10 +316,10 @@ function bindAuthAccountLogOut(){
             if(Object.keys(ConfigManager.getAuthAccounts()).length === 1){
                 isLastAccount = true
                 setOverlayContent(
-                    'Warning<br>This is Your Last Account',
-                    'In order to use the launcher you must be logged into at least one account. You will need to login again after.<br><br>Are you sure you want to log out?',
-                    'I\'m Sure',
-                    'Cancel'
+                    'Attention<br>Ceci est votre compte actif',
+                    'Pour utiliser le lanceur, vous devez être connecté à un compte. Vous devrez vous reconnecter après.<br><br>Êtes-vous sûr de vouloir vous déconnecter?',
+                    'Je suis sûr',
+                    'Annulé'
                 )
                 setOverlayHandler(() => {
                     processLogOut(val, isLastAccount)
@@ -415,7 +372,7 @@ function refreshAuthAccountSelected(uuid){
         const selBtn = val.getElementsByClassName('settingsAuthAccountSelect')[0]
         if(uuid === val.getAttribute('uuid')){
             selBtn.setAttribute('selected', '')
-            selBtn.innerHTML = 'Selected Account &#10004;'
+            selBtn.innerHTML = 'Compte Sélectionné &#10004;'
         } else {
             if(selBtn.hasAttribute('selected')){
                 selBtn.removeAttribute('selected')
@@ -449,7 +406,7 @@ function populateAuthAccounts(){
             <div class="settingsAuthAccountRight">
                 <div class="settingsAuthAccountDetails">
                     <div class="settingsAuthAccountDetailPane">
-                        <div class="settingsAuthAccountDetailTitle">Username</div>
+                        <div class="settingsAuthAccountDetailTitle">Pseudo</div>
                         <div class="settingsAuthAccountDetailValue">${acc.displayName}</div>
                     </div>
                     <div class="settingsAuthAccountDetailPane">
@@ -458,9 +415,9 @@ function populateAuthAccounts(){
                     </div>
                 </div>
                 <div class="settingsAuthAccountActions">
-                    <button class="settingsAuthAccountSelect" ${selectedUUID === acc.uuid ? 'selected>Selected Account &#10004;' : '>Select Account'}</button>
+                    <button class="settingsAuthAccountSelect" ${selectedUUID === acc.uuid ? 'selected>Compte Actif &#10004;' : '>Compte Actif'}</button>
                     <div class="settingsAuthAccountWrapper">
-                        <button class="settingsAuthAccountLogOut">Log Out</button>
+                        <button class="settingsAuthAccountLogOut">Se déconnecter</button>
                     </div>
                 </div>
             </div>
@@ -513,9 +470,6 @@ function resolveModsForUI(){
     const servConf = ConfigManager.getModConfiguration(serv)
 
     const modStr = parseModulesForUI(distro.getServer(serv).getModules(), false, servConf.mods)
-
-    document.getElementById('settingsReqModsContent').innerHTML = modStr.reqMods
-    document.getElementById('settingsOptModsContent').innerHTML = modStr.optMods
 }
 
 /**
@@ -677,8 +631,6 @@ function resolveDropinModsForUI(){
                     </div>
                 </div>`
     }
-
-    document.getElementById('settingsDropinModsContent').innerHTML = dropinMods
 }
 
 /**
@@ -705,81 +657,7 @@ function bindDropinModsRemoveButton(){
     })
 }
 
-/**
- * Bind functionality to the file system button for the selected
- * server configuration.
- */
-function bindDropinModFileSystemButton(){
-    const fsBtn = document.getElementById('settingsDropinFileSystemButton')
-    fsBtn.onclick = () => {
-        DropinModUtil.validateDir(CACHE_SETTINGS_MODS_DIR)
-        shell.openPath(CACHE_SETTINGS_MODS_DIR)
-    }
-    fsBtn.ondragenter = e => {
-        e.dataTransfer.dropEffect = 'move'
-        fsBtn.setAttribute('drag', '')
-        e.preventDefault()
-    }
-    fsBtn.ondragover = e => {
-        e.preventDefault()
-    }
-    fsBtn.ondragleave = e => {
-        fsBtn.removeAttribute('drag')
-    }
 
-    fsBtn.ondrop = e => {
-        fsBtn.removeAttribute('drag')
-        e.preventDefault()
-
-        DropinModUtil.addDropinMods(e.dataTransfer.files, CACHE_SETTINGS_MODS_DIR)
-        reloadDropinMods()
-    }
-}
-
-/**
- * Save drop-in mod states. Enabling and disabling is just a matter
- * of adding/removing the .disabled extension.
- */
-function saveDropinModConfiguration(){
-    for(dropin of CACHE_DROPIN_MODS){
-        const dropinUI = document.getElementById(dropin.fullName)
-        if(dropinUI != null){
-            const dropinUIEnabled = dropinUI.hasAttribute('enabled')
-            if(DropinModUtil.isDropinModEnabled(dropin.fullName) != dropinUIEnabled){
-                DropinModUtil.toggleDropinMod(CACHE_SETTINGS_MODS_DIR, dropin.fullName, dropinUIEnabled).catch(err => {
-                    if(!isOverlayVisible()){
-                        setOverlayContent(
-                            'Failed to Toggle<br>One or More Drop-in Mods',
-                            err.message,
-                            'Okay'
-                        )
-                        setOverlayHandler(null)
-                        toggleOverlay(true)
-                    }
-                })
-            }
-        }
-    }
-}
-
-// Refresh the drop-in mods when F5 is pressed.
-// Only active on the mods tab.
-document.addEventListener('keydown', (e) => {
-    if(getCurrentView() === VIEWS.settings && selectedSettingsTab === 'settingsTabMods'){
-        if(e.key === 'F5'){
-            reloadDropinMods()
-            saveShaderpackSettings()
-            resolveShaderpacksForUI()
-        }
-    }
-})
-
-function reloadDropinMods(){
-    resolveDropinModsForUI()
-    bindDropinModsRemoveButton()
-    bindDropinModFileSystemButton()
-    bindModsToggleSwitch()
-}
 
 // Shaderpack
 
@@ -837,7 +715,7 @@ function bindShaderpackButton() {
     spBtn.onclick = () => {
         const p = path.join(CACHE_SETTINGS_INSTANCE_DIR, 'shaderpacks')
         DropinModUtil.validateDir(p)
-        shell.openPath(p)
+        shell.openItem(p)
     }
     spBtn.ondragenter = e => {
         e.dataTransfer.dropEffect = 'move'
@@ -892,31 +770,6 @@ function loadSelectedServerOnModsTab(){
     `
 }
 
-// Bind functionality to the server switch button.
-document.getElementById('settingsSwitchServerButton').addEventListener('click', (e) => {
-    e.target.blur()
-    toggleServerSelection(true)
-})
-
-/**
- * Save mod configuration for the current selected server.
- */
-function saveAllModConfigurations(){
-    saveModConfiguration()
-    ConfigManager.save()
-    saveDropinModConfiguration()
-}
-
-/**
- * Function to refresh the mods tab whenever the selected
- * server is changed.
- */
-function animateModsTabRefresh(){
-    $('#settingsTabMods').fadeOut(500, () => {
-        prepareModsTab()
-        $('#settingsTabMods').fadeIn(500)
-    })
-}
 
 /**
  * Prepare the Mods tab for display.
@@ -925,8 +778,6 @@ function prepareModsTab(first){
     resolveModsForUI()
     resolveDropinModsForUI()
     resolveShaderpacksForUI()
-    bindDropinModsRemoveButton()
-    bindDropinModFileSystemButton()
     bindShaderpackButton()
     bindModsToggleSwitch()
     loadSelectedServerOnModsTab()

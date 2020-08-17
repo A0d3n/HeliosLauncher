@@ -10,7 +10,7 @@ function getCurrentPlatform(){
         case 'linux':
             return Platform.linux
         default:
-            console.error('Cannot resolve current platform!')
+            console.error('Impossible de trouver une solution pour la plate-forme actuelle !')
             return undefined
     }
 }
@@ -21,7 +21,7 @@ builder.build({
         appId: 'ombrevallauncher',
         productName: 'Ombreval Launcher',
         artifactName: '${productName}.${ext}',
-        copyright: 'Copyright © 2020-2021 Julien Vermet',
+        copyright: 'Copyright © 2020-2021 A0d3n',
         directories: {
             buildResources: 'build',
             output: 'dist'
@@ -46,10 +46,10 @@ builder.build({
         },
         linux: {
             target: 'AppImage',
-            maintainer: 'Julien Vermet',
-            vendor: 'Julien Vermet',
-            synopsis: 'Modded Minecraft Launcher',
-            description: 'Custom launcher which allows users to join modded servers. All mods, configurations, and updates are handled automatically.',
+            maintainer: 'A0d3n',
+            vendor: 'A0d3n',
+            synopsis: 'Launcher Minecraft Moddé',
+            description: 'Lanceur personnalisé qui permet aux utilisateurs de rejoindre les serveurs moddés. Tous les mods, configurations et mises à jour sont gérés automatiquement.',
             category: 'Game'
         },
         compression: 'maximum',
@@ -62,7 +62,7 @@ builder.build({
         asar: true
     }
 }).then(() => {
-    console.log('Build complete!')
+    console.log('Construction complète !')
 }).catch(err => {
-    console.error('Error during build!', err)
+    console.error('Erreur lors de la construction !', err)
 })

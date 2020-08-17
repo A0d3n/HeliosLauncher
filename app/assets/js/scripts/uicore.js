@@ -26,9 +26,9 @@ window.eval = global.eval = function () {
 
 // Display warning when devtools window is opened.
 remote.getCurrentWebContents().on('devtools-opened', () => {
-    console.log('%cTu n as rien à faire ici pshhh cass-toi !.', 'color: white; -webkit-text-stroke: 4px #a02d2a; font-size: 60px; font-weight: bold')
-    console.log('%cIf you\'ve been told to paste something here, you\'re being scammed.', 'font-size: 16px')
-    console.log('%cUnless you know exactly what you\'re doing, close this window.', 'font-size: 16px')
+    console.log('%cTu n as rien à faire ici !!', 'color: white; -webkit-text-stroke: 4px #a02d2a; font-size: 60px; font-weight: bold')
+    console.log('%cSi on vous a dit de coller quelque chose ici, vous êtes victime d"une escroquerie..', 'font-size: 16px')
+    console.log('%cA moins que vous ne sachiez exactement ce que vous faites, fermez cette fenêtre.', 'font-size: 16px')
 })
 
 // Disable zoom, needed for darwin.
@@ -77,12 +77,12 @@ if(!isDev){
             case 'realerror':
                 if(info != null && info.code != null){
                     if(info.code === 'ERR_UPDATER_INVALID_RELEASE_FEED'){
-                        loggerAutoUpdater.log('No suitable releases found.')
+                        loggerAutoUpdater.log('Aucun communiqué approprié n"a été trouvé.')
                     } else if(info.code === 'ERR_XML_MISSED_ELEMENT'){
-                        loggerAutoUpdater.log('No releases found.')
+                        loggerAutoUpdater.log('Aucun communiqué trouvé.')
                     } else {
-                        loggerAutoUpdater.error('Error during update check..', info)
-                        loggerAutoUpdater.debug('Error Code:', info.code)
+                        loggerAutoUpdater.error('Erreur lors de la vérification de la mise à jour..', info)
+                        loggerAutoUpdater.debug('Code d"erreur:', info.code)
                     }
                 }
                 break

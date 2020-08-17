@@ -319,7 +319,7 @@ function bindAuthAccountLogOut(){
                     'Attention<br>Ceci est votre compte actif',
                     'Pour utiliser le lanceur, vous devez être connecté à un compte. Vous devrez vous reconnecter après.<br><br>Êtes-vous sûr de vouloir vous déconnecter?',
                     'Je suis sûr',
-                    'Annulé'
+                    'Annuler'
                 )
                 setOverlayHandler(() => {
                     processLogOut(val, isLastAccount)

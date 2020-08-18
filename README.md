@@ -4,7 +4,7 @@
 
 <em><h5 align="center">(formerly Electron Launcher)</h5></em>
 
-[<p align="center"><img src="https://travis-ci.com/A0d3n/OmbrevalLauncher.svg?style=for-the-badge" alt="travis">](https://travis-ci.org/A0d3n/OmbrevalLauncher) [<img src="https://img.shields.io/github/downloads/A0d3n/OmbrevalLauncher/total.svg?style=for-the-badge" alt="downloads">](https://github.com/A0d3n/OmbrevalLauncher/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="stark"></p>
+[<p align="center"><img src="https://img.shields.io/travis/A0d3n/OmbrevalLauncher.svg?style=for-the-badge" alt="travis">](https://travis-ci.org/A0d3n/OmbrevalLauncher) [<img src="https://img.shields.io/github/downloads/A0d3n/OmbrevalLauncher/total.svg?style=for-the-badge" alt="downloads">](https://github.com/A0d3n/OmbrevalLauncher/releases) <img src="https://forthebadge.com/images/badges/winter-is-coming.svg"  height="28px" alt="stark"></p>
 
 <p align="center">Rejoignez le serveur d'Ombreval sans vous soucier d'installer Java, Forge, ou d'autres mods. Nous nous occupons de cela pour vous.</p>
 

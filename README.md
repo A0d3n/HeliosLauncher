@@ -40,9 +40,9 @@ If you download from the [Releases](https://github.com/A0d3n/OmbrevalLauncher/re
 
 | Platform | File |
 | -------- | ---- |
-| Windows x64 | `helioslauncher-setup-VERSION.exe` |
-| macOS | `helioslauncher-VERSION.dmg` |
-| Linux x64 | `helioslauncher-VERSION-x86_64.AppImage` |
+| Windows x64 | `ombrevallauncher-setup-VERSION.exe` |
+| macOS | `ombrevallauncher-VERSION.dmg` |
+| Linux x64 | `ombrevallauncher-VERSION-x86_64.AppImage` |
 
 ### See you ingame.
 
